@@ -1,0 +1,117 @@
+
+<h3 align="center" style="color: rgb(229, 25, 25);"><i>Home Data</i></h3>
+
+    
+    <ng-template #HomeContent let-c="close" let-d="dismiss" style="z-index: 05; min-width: 5rem;">
+        <div class="bg-info" style="min-width: 5rem;">
+            <div class="modal-header">
+                <h4 class="modal-title"> Info</h4>
+                <button type="button" class="close" mat-dialog-close aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>    
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Opportunity Id</label> 
+            <input type="text" class="form-control"[(ngModel)]="opportunityObject.id">
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" class="form-control"[(ngModel)]="opportunityObject.name">
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Closed Date:</label>
+            <input type="text" class="form-control"[(ngModel)]="opportunityObject.closeDate">
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Amount:</label>
+            <input type="text" class="form-control"[(ngModel)]="opportunityObject.amount">
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Stage:</label>
+            <input type="text" class="form-control"[(ngModel)]="opportunityObject.stage">
+        </div>
+    </div>
+    <div class="modal-footer" >
+        <button type="button" class="btn btn-success" (click)="save()">Save</button>
+        <!-- <button type="button" class="btn btn-success" (click)="c('Close click'); save()">Save</button> -->
+    </div>
+    </ng-template>
+
+<button class="btn btn-success" mat-dialog-close (click)="openPopUp(HomeContent);add()">Add New</button><br>
+
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter">
+</mat-form-field>
+<br>
+
+   
+    <div class="mat-elevation-z8" style="overflow-y: scroll" style="overflow-x: scroll">
+        <button (click)="deleteMultiple()">Delete Selected</button>
+        <!-- <button (click)="deleteAllByidIn(element.id)">All Delete</button> -->
+   <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="Action">
+    <th mat-header-cell *matHeaderCellDef>Action </th>
+    <td mat-cell *matCellDef="let element"><input type="checkbox" value="check" (change)="changeSelection($event,element.id)">
+    <button (click)="update(element.id); openPopUp(HomeContent);">Edit</button>&nbsp;
+    <a href="/nav/home" (click)="delete(element.id)">Delete </a> </td>
+    </ng-container>
+        
+        
+   
+
+   <ng-container matColumnDef="id">
+   <th mat-header-cell *matHeaderCellDef> Id </th>
+   <td mat-cell *matCellDef="let element"> <a [routerLink]="['/nav/opportunity',element.id]">{{element.id}} </a></td>
+   </ng-container>
+   
+   
+   <ng-container matColumnDef="name">
+   <th mat-header-cell *matHeaderCellDef> Name </th>
+   <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+   </ng-container>
+   
+
+   <ng-container matColumnDef="closeDate">
+    <th mat-header-cell *matHeaderCellDef> CloseDate </th>
+    <td mat-cell *matCellDef="let element"> {{element.closeDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stage">
+        <input type="checkbox">
+    <th mat-header-cell *matHeaderCellDef>Stage </th>
+    <td mat-cell *matCellDef="let element"> {{element.stage}} </td>
+    </ng-container>
+ 
+
+ <tr mat-header-row *matHeaderRowDef="displayedColumns">
+   
+ </tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <td> </td>
+</tr>
+ 
+</table><br><br>
+
+<mat-paginator [pageSizeOptions]="[5,10, 20, 25]" showFirstLastButtons></mat-paginator>
+</div>
